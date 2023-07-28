@@ -30,12 +30,12 @@ while (stillPlaying) {
     // check if the player input is in the list of inputs that computer's choice beats
     if (checkWinCondition(playerMove, validOptions[computerMove])) {
         // if it is then display the computer as the winner
-        console.log("You lost!")
+        console.log(`You lost! ${capitalizeString(computerMove)} beats ${capitalizeString(playerMove)}`)
     }
     // check if the computer's option is in the list of options that the player's choice beats
     else if (checkWinCondition(computerMove, validOptions[playerMove])) {
         // if it is then display the player as the winner
-        console.log("You Win!")
+        console.log(`You Win! ${capitalizeString(playerMove)} beats ${capitalizeString(computerMove)}`)
     }
     else {
         // otherwise it's a tie
@@ -59,6 +59,9 @@ function getComputerMove(optionsObject) {
 }
 
 function checkWinCondition(check, listOfMovesBeatByMove) {
-    return check in listOfMovesBeatByMove
+    return listOfMovesBeatByMove.includes(check)
 }
 
+function capitalizeString(string) {
+    return string[0].toUpperCase() + string.slice(1).toLowerCase()
+}
