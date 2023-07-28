@@ -21,7 +21,7 @@ while (stillPlaying) {
         // display options for player
         console.log(`Your options are: ${Object.keys(validOptions).join(", ")}`)
         // prompt player for input
-        playerMove = input("> ").toLowerCase()
+        playerMove = prompt("> ").toLowerCase()
     }
 
     // get computer move
@@ -44,7 +44,7 @@ while (stillPlaying) {
 
     // ask the player if they want to rematch
     console.log("Would you like to play again? (yes/no): ")
-    if (input("> ").toLowerCase() == "no") {
+    if (prompt("> ").toLowerCase() == "no") {
         // if no then stillPlaying is set to false
         stillPlaying = false
     }
