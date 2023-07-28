@@ -19,7 +19,7 @@ while (stillPlaying) {
     // check if player input is inside the list of valid options
     while (!(playerMove in validOptions)) {
         // display options for player
-        console.log(`Your options are: ${validOptions.join(", ")}`)
+        console.log(`Your options are: ${Object.keys(validOptions).join(", ")}`)
         // prompt player for input
         playerMove = input("> ").toLowerCase()
     }
