@@ -4,64 +4,77 @@ Rock Paper Scissors
 
 "use strict"
 
-//set stillPlaying to true
-let stillPlaying = true
+// create play round function that takes the
+// player choice and the computer choice then
+// determines the winner
+function playRound(playerMove, computerMove, options) {
+    let winner = "tie";
+    // check if the player input is in the list of inputs that computer's choice beats
+    if (checkWinCondition(playerMove, options[computerMove])) {
+        // if it is then display the computer as the winner
+        winner = "computer";
+    }
+    // check if the computer's option is in the list of options that the player's choice beats
+    else if (checkWinCondition(computerMove, options[playerMove])) {
+        // if it is then display the player as the winner
+        winner = "player";
+    }
+    return winner;
+}
 
-// While stillPlaying
-while (stillPlaying) {
+function game() {
+    const numberOfGames = 5;
+
     // create list of valid options
-    const validOptions = {
+    const options = {
         "rock": ["scissors"],
         "paper": ["rock"],
         "scissors": ["paper"]
-    }
-    let playerMove = ""
-    // check if player input is inside the list of valid options
-    while (!(playerMove in validOptions)) {
-        // display options for player
-        console.log(`Your options are: ${Object.keys(validOptions).join(", ")}`)
-        // prompt player for input
-        playerMove = prompt("> ").toLowerCase()
-    }
+    };
 
-    // get computer move
-    let computerMove = getComputerMove(validOptions)
+    for (let i = 0; i < numberOfGames; ++i) {
+        let playerMove = "";
+        // check if player input is inside the list of valid options
+        while (!(playerMove in options)) {
+            // prompt player for input
+            playerMove =
+                prompt(`Your options are: ${Object.keys(options).join(", ")}`)
+                    .toLowerCase();
+        }
 
-    // check if the player input is in the list of inputs that computer's choice beats
-    if (checkWinCondition(playerMove, validOptions[computerMove])) {
-        // if it is then display the computer as the winner
-        console.log(`You lost! ${capitalizeString(computerMove)} beats ${capitalizeString(playerMove)}`)
-    }
-    // check if the computer's option is in the list of options that the player's choice beats
-    else if (checkWinCondition(computerMove, validOptions[playerMove])) {
-        // if it is then display the player as the winner
-        console.log(`You Win! ${capitalizeString(playerMove)} beats ${capitalizeString(computerMove)}`)
-    }
-    else {
-        // otherwise it's a tie
-        console.log("It's a tie!")
-    }
+        // get computer move
+        let computerMove = getComputerMove(options);
 
-    // ask the player if they want to rematch
-    console.log("Would you like to play again? (yes/no): ")
-    if (prompt("> ").toLowerCase() == "no") {
-        // if no then stillPlaying is set to false
-        stillPlaying = false
+        let winner = playRound(playerMove, computerMove, options);
+        if (winner === "computer") {
+            console.log(`You lost! ${capitalizeString(computerMove)} beats ${capitalizeString(playerMove)}`);
+        }
+        else if (winner === "player") {
+            console.log(`You Win! ${capitalizeString(playerMove)} beats ${capitalizeString(computerMove)}`);
+        }
+        else if (winner === "tie") {
+            console.log("It's a tie!");
+        }
     }
 }
 
 
-function getComputerMove(optionsObject) {
+function getComputerMove(options) {
     // generate random number from 0 to 2
     // use the random number to select the computer's option
-    const optionsArray = Object.keys(optionsObject)
-    return optionsArray[Math.floor(Math.random() * optionsArray.length)]
+    const optionsArray = Object.keys(options);
+    return optionsArray[Math.floor(Math.random() * optionsArray.length)];
 }
+
 
 function checkWinCondition(check, listOfMovesBeatByMove) {
-    return listOfMovesBeatByMove.includes(check)
+    return listOfMovesBeatByMove.includes(check);
 }
 
+
 function capitalizeString(string) {
-    return string[0].toUpperCase() + string.slice(1).toLowerCase()
+    return string[0].toUpperCase() + string.slice(1).toLowerCase();
 }
+
+
+game()
