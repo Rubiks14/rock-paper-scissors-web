@@ -32,6 +32,9 @@ function game() {
         "scissors": ["paper"]
     };
 
+    let playerScore = 0;
+    let computerScore = 0;
+
     for (let i = 0; i < numberOfGames; ++i) {
         let playerMove = "";
         // check if player input is inside the list of valid options
@@ -47,15 +50,30 @@ function game() {
 
         let winner = playRound(playerMove, computerMove, options);
         if (winner === "computer") {
+            ++computerScore;
             console.log(`You lost! ${capitalizeString(computerMove)} beats ${capitalizeString(playerMove)}`);
         }
         else if (winner === "player") {
+            ++playerScore
             console.log(`You Win! ${capitalizeString(playerMove)} beats ${capitalizeString(computerMove)}`);
         }
         else if (winner === "tie") {
+            ++playerScore;
+            ++computerScore;
             console.log("It's a tie!");
         }
     }
+
+    let finalScoreMessage = ""
+    if (playerScore > computerScore) {
+        finalScoreMessage = "You took the series!"
+    }
+    else if (computerScore > playerScore) {
+        finalScoreMessage = "You lost the series!"
+    } else {
+        finalScoreMessage = "It's a tie!"
+    }
+    console.log(`${finalScoreMessage} Final Score: ${playerScore}-${computerScore}`)
 }
 
 
